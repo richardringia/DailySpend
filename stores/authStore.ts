@@ -1,44 +1,6 @@
-// import { usePocketBase } from "@/contexts/pocketbase";
-// import { AuthRecord, RecordModel } from "pocketbase";
-// import { createStore } from "zustand";
-
-// export interface AuthProps {
-//   user: AuthRecord | null;
-//   isInitialized: boolean;
-//   isLoggedIn: boolean;
-// }
-
-// export interface AuthState extends AuthProps {
-//   //   appSignin: (
-//   //     email: string,
-//   //     password: string
-//   //   ) => Promise<{
-//   //     user: RecordModel | null;
-//   //     error: Error | null;
-//   //   }>;
-//   //   appSignout: () => Promise<{ error: Error | null }>;
-//   //   createAccount: (
-//   //     email: string,
-//   //     password: string,
-//   //     passwordConfirm: string,
-//   //     name: string
-//   //   ) => Promise<{ user: RecordModel | null; error: Error | null }>;
-// }
-
-// export type AuthStore = ReturnType<typeof createAuthStore>;
-
-// export const createAuthStore = (initState?: Partial<AuthProps>) => {
-//   const { pb } = usePocketBase();
-//   return createStore<AuthState>()((set) => ({
-//     user: pb?.authStore.record ?? null,
-//     isInitialized: pb?.authStore.isValid ?? false,
-//     isLoggedIn: pb?.authStore.isValid ?? false,
-//   }));
-// };
-
-import { usePocketbaseContext } from "@/hooks/usePocketbaseContext";
 import { AuthModel, AuthRecord } from "pocketbase";
 import { createStore } from "zustand";
+import { usePocketbaseContext } from "~/hooks/usePocketbaseContext";
 
 export interface AuthProps {
   user: AuthRecord | null;

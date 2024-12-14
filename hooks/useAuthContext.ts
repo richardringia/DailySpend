@@ -1,5 +1,5 @@
-import { AuthContext } from "@/contexts/authContext";
-import { AuthState } from "@/stores/authStore";
+import { AuthContext } from "~/contexts/authContext";
+import { AuthState } from "~/stores/authStore";
 import { useContext } from "react";
 import { useStore } from "zustand";
 

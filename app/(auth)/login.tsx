@@ -1,77 +1,70 @@
-import { Text, View, TextInput, StyleSheet, Alert, Button } from "react-native";
-import { useRouter, Link } from "expo-router";
-import { useState } from "react";
-import { useAuthContext } from "@/hooks/useAuthContext";
-import { usePocketbaseContext } from "@/hooks/usePocketbaseContext";
-// import { useAuth } from "@/contexts/auth";
+import { useRouter } from "expo-router";
+import { Alert, View } from "react-native";
+import { create } from "zustand";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+import { Text } from "~/components/ui/text";
+import { H1, Muted } from "~/components/ui/typography";
+import { useAuthContext } from "~/hooks/useAuthContext";
 
-export default function LogIn() {
+interface LoginFormState {
+  email: string;
+  password: string;
+  setEmail: (email: string) => void;
+  setPassword: (password: string) => void;
+}
+
+const useLoginFormStore = create<LoginFormState>((set) => ({
+  email: "",
+  password: "",
+  setEmail: (email: string) => set({ email }),
+  setPassword: (password: string) => set({ password }),
+}));
+
+export default function LoginScreen() {
   const router = useRouter();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const signIn = useAuthContext((state) => state.signIn);
-  const pb = usePocketbaseContext((state) => state.pb);
+  const { email, password, setEmail, setPassword } = useLoginFormStore();
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <View>
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          placeholder="email"
+    <View className="flex-1 justify-center items-center">
+      <View className="p-4 native:pb-32 max-w-md gap-6">
+        <View className="gap-1">
+          <H1 className="text-foreground text-center">Login</H1>
+          <Muted className="text-base text-center">
+            Enter you email below to create your account
+          </Muted>
+        </View>
+        <Input
+          placeholder="name@example.com"
           autoCapitalize="none"
           nativeID="email"
           onChangeText={setEmail}
-          style={styles.textInput}
         />
-      </View>
-      <View>
-        <Text style={styles.label}>Password</Text>
-        <TextInput
+        <Input
           placeholder="password"
           secureTextEntry={true}
           nativeID="password"
           onChangeText={setPassword}
-          style={styles.textInput}
         />
-      </View>
-      <Button
-        onPress={async () => {
-          const resp = await signIn(email, password);
-          console.log(resp);
-          console.log(pb, pb?.authStore.isValid, pb?.authStore.record);
+        <Button
+          onPress={async () => {
+            if (email && password) {
+              const resp = await signIn(email, password);
 
-          // if (resp?.user) {
-          //   // Redirect to the index page of (tabs) segment.
-          //   router.replace("/(tabs)");
-          // } else {
-          //   console.log(resp.error);
-          //   Alert.alert("Login Error", resp.error?.message);
-          // }
-        }}
-        title="Login"
-      />
-      <Button
-        onPress={() => router.push("/create-account")}
-        title="Create account"
-      />
+              if (resp?.user) {
+                router.replace("/(tabs)/explore");
+              } else {
+                //@ts-ignore
+                Alert.alert("Login Error", resp.error?.message);
+              }
+            }
+          }}
+        >
+          <Text>Login</Text>
+        </Button>
+      </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  label: {
-    marginBottom: 4,
-    color: "#455fff",
-  },
-  textInput: {
-    width: 250,
-    borderWidth: 1,
-    borderRadius: 4,
-    borderColor: "#455fff",
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    marginBottom: 8,
-  },
-});

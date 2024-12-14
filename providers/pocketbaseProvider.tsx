@@ -1,8 +1,9 @@
-import { PocketbaseContext } from "@/contexts/pocketbaseContext";
+import { PocketbaseContext } from "~/contexts/pocketbaseContext";
 import {
+  PocketbaseProps,
   PocketbaseStore,
   createPocketbaseStore,
-} from "@/stores/pocketbaseStore";
+} from "~/stores/pocketbaseStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PocketBase, { AsyncAuthStore } from "pocketbase";
 import { useRef } from "react";

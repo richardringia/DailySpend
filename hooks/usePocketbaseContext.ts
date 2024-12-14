@@ -1,5 +1,5 @@
-import { PocketbaseContext } from "@/contexts/pocketbaseContext";
-import { PocketbaseState } from "@/stores/pocketbaseStore";
+import { PocketbaseContext } from "~/contexts/pocketbaseContext";
+import { PocketbaseState } from "~/stores/pocketbaseStore";
 import { useContext } from "react";
 import { useStore } from "zustand";
 
