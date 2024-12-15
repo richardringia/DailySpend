@@ -2,9 +2,10 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
+      "~/*": [
+        "*"
       ]
     }
   },
@@ -12,6 +13,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "contexts/old-auth.jsx",
+    "utils/AsyncAuthStorage.js",
+    "nativewind-env.d.ts"
   ]
 }
