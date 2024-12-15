@@ -23,6 +23,9 @@ export default function HomeScreen() {
           <Text>Login</Text>
         </Button>
       )}
+      <Button onPress={() => router.push("/expenses")}>
+        <Text>Expenses</Text>
+      </Button>
     </SafeAreaView>
   );
 }

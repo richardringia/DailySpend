@@ -47,8 +47,8 @@ export default function RootLayout() {
 
   useEffect(() => {
     (async () => {
-      const theme = await AsyncStorage.getItem("theme");
-
+      // const theme = await AsyncStorage.getItem("theme");
+      const theme = "dark";
       if (Platform.OS === "web") {
         // Adds the background color to the html element to prevent white background on overscroll.
         document.documentElement.classList.add("bg-background");
@@ -88,9 +88,9 @@ export default function RootLayout() {
     return null;
   }
 
-  // if (!isColorSchemeLoaded) {
-  //   return null;
-  // }
+  if (!isColorSchemeLoaded) {
+    return null;
+  }
 
   return (
     <PocketbaseProvider>

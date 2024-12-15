@@ -7,6 +7,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PocketBase, { AsyncAuthStore } from "pocketbase";
 import { useRef } from "react";
+import { storage } from "~/lib/storage";
 
 export function PocketbaseProvider({
   children,
@@ -14,9 +15,9 @@ export function PocketbaseProvider({
   children: React.ReactNode;
 }) {
   const store = new AsyncAuthStore({
-    save: async (serialized) => AsyncStorage.setItem("pb_auth", serialized),
-    initial: AsyncStorage.getItem("pb_auth"),
-    clear: async () => AsyncStorage.removeItem("pb_auth"),
+    save: async (serialized) => storage.set("pb_auth", serialized),
+    initial: storage.getString("pb_auth"),
+    clear: async () => storage.delete("pb_auth"),
   });
   const pbInstance = new PocketBase("http://192.168.1.42:8090", store);
 
